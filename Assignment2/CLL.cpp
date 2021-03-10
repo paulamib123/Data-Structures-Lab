@@ -148,6 +148,12 @@ void List ::insertAtEnd(int val)
 
 void List ::deleteAtStart()
 {
+    if (getSize() == 1)
+    {
+        head = NULL;
+        return;
+    }
+
     Node *q = head;
     temp = head;
 
@@ -177,6 +183,12 @@ void List ::deleteAtMid(int n)
 
 void List ::deleteAtEnd()
 {
+    if (getSize() == 1)
+    {
+        head = NULL;
+        return;
+    }
+
     temp = head;
     while (temp->next->next != head)
     {
@@ -187,8 +199,14 @@ void List ::deleteAtEnd()
     delete (q);
 }
 
-void List ::reverse()
+void List ::reverse() //CLL
 {
+    if (head == NULL)
+    {
+        cout << "List is Empty" << endl;
+        return;
+    }
+
     Node *current = head;
     Node *prev = NULL;
     Node *next = NULL;
@@ -299,7 +317,7 @@ int main()
                     cout << "Please enter valid position" << endl;
                     cout << "Enter position (except start and end position): ";
                     cin >> pos;
-                } while (pos <= 0 || pos >= length);
+                } while (pos <= 1 || pos >= length);
 
                 list.insertAtMid(val, pos);
                 cout << "Inserted element" << endl;
@@ -346,7 +364,7 @@ int main()
                     cout << "Please enter valid position" << endl;
                     cout << "Enter position (except start and end position): ";
                     cin >> pos;
-                } while (pos <= 0 || pos >= length);
+                } while (pos <= 1 || pos >= length);
 
                 list.deleteAtMid(pos);
                 cout << "Deleted elemnet" << endl;

@@ -142,6 +142,12 @@ void List ::insertAtEnd(int val)
 
 void List ::deleteAtStart()
 {
+    if (getSize() == 1)
+    {
+        head = NULL;
+        return;
+    }
+
     temp = head;
     head = temp->next;
     head->prev = NULL;
@@ -164,6 +170,12 @@ void List ::deleteAtMid(int n)
 
 void List ::deleteAtEnd()
 {
+    if (getSize() == 1)
+    {
+        head = NULL;
+        return;
+    }
+
     temp = head;
     while (temp->next->next != NULL)
     {
@@ -174,23 +186,30 @@ void List ::deleteAtEnd()
     delete (q);
 }
 
-void List ::reverse() //baaki hai
+void List ::reverse() //DLL
 {
+    if (head == NULL)
+    {
+        cout << "List is Empty";
+        return;
+    }
+
     Node *current = head;
-    Node *prev = NULL;
-    Node *next = NULL;
+    Node *previous = NULL;
 
     while (current != NULL)
     {
-        // reversing the link
-        next = current->next;
-        current->next = prev;
-
-        // moving pointers ahead
-        prev = current;
-        current = next;
+        // swap next and prev for current nodex
+        temp = current->next;
+        current->next = current->prev;
+        current->prev = temp;
+        // to make last node as head
+        previous = current;
+        // move to the next node
+        current = current->prev;
     }
-    head = prev;
+
+    head = previous;
 }
 
 void List ::concatenate(List list2)
@@ -200,7 +219,7 @@ void List ::concatenate(List list2)
     {
         this->temp = this->temp->next;
     }
-    list2.head->prev = this->temp->next;
+    list2.head->prev = this->temp;
     this->temp->next = list2.head;
 }
 
@@ -278,7 +297,7 @@ int main()
                     cout << "Please enter valid position" << endl;
                     cout << "Enter position (except start and end position): ";
                     cin >> pos;
-                } while (pos <= 0 || pos >= length);
+                } while (pos <= 1 || pos >= length);
 
                 list.insertAtMid(val, pos);
                 cout << "Inserted element" << endl;
@@ -325,7 +344,7 @@ int main()
                     cout << "Please enter valid position" << endl;
                     cout << "Enter position (except start and end position): ";
                     cin >> pos;
-                } while (pos <= 0 || pos >= length);
+                } while (pos <= 1 || pos >= length);
 
                 list.deleteAtMid(pos);
                 cout << "Deleted elemnet" << endl;
@@ -353,7 +372,9 @@ int main()
             cout << "Enter number of elements to insert in Linked List 2: ";
             cin >> n;
             if (list2.head != NULL)
+            {
                 list2.head = NULL;
+            }
             for (int i = 0; i < n; i++)
             {
                 cout << "Enter value for node " << i + 1 << " : ";
